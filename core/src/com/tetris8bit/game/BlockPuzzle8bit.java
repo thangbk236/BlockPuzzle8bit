@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tetris8bit.game.Assets.GameAsset;
 import com.tetris8bit.game.Screen.GameOverScreen;
 import com.tetris8bit.game.Screen.GamePlayScreen;
 import com.tetris8bit.game.Screen.MainMenuScreen;
@@ -16,17 +17,17 @@ import com.tetris8bit.game.Screen.SettingScreen;
 
 public class BlockPuzzle8bit extends Game {
 
+	GameAsset gameAsset;
+	private PlayServices playservices;
 
-    private PlayServices playservices;
+	public BlockPuzzle8bit(PlayServices playservices) {
+		this.playservices = playservices;
+	}
 
-    public BlockPuzzle8bit(PlayServices playservices) {
-        this.playservices = playservices;
-    }
-
-    TestGame testgame;
+	TestGame testgame;
 	@Override
 	public void create () {
-
+		gameAsset = new GameAsset();
 		testgame = new TestGame(this);
 		//this.setScreen(testgame);
 		this.setScreen(TestGame.getInstance(this,true));
@@ -35,13 +36,13 @@ public class BlockPuzzle8bit extends Game {
 	@Override
 	public void render () {
 
-        super.render();
+		super.render();
 	}
 
-    @Override
-    public void resize(int width, int height) {
+	@Override
+	public void resize(int width, int height) {
 
-    }
+	}
 
 	@Override
 	public void dispose () {

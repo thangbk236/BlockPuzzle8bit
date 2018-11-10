@@ -46,7 +46,7 @@ public class Button {
     }
 
     public void render(SpriteBatch batch){
-        isClick=checkOnClick();
+
         batch.begin();
         if (isClick){
             batch.draw(textureOnClick,texturePosition.x,texturePosition.y);
