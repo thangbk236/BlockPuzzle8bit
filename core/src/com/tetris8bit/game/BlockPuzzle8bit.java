@@ -24,13 +24,13 @@ public class BlockPuzzle8bit extends Game {
 		this.playservices = playservices;
 	}
 
-	TestGame testgame;
+	//TestGame testgame;
 	@Override
 	public void create () {
 		gameAsset = new GameAsset();
-		testgame = new TestGame(this);
+		//testgame = new TestGame(this);
 		//this.setScreen(testgame);
-		this.setScreen(TestGame.getInstance(this,true));
+		this.setScreen(MainMenuScreen.getInstance(this,true));
 	}
 
 	@Override

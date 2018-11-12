@@ -8,18 +8,18 @@ import com.tetris8bit.game.Screen.MainMenuScreen;
 import com.tetris8bit.game.Screen.SettingScreen;
 
 public class GameHome {
-    private Button LeaderBoard;
-    private Button PlayGame;
-    private Button SettingGame;
+    private GameButton LeaderBoard;
+    private GameButton PlayGame;
+    private GameButton SettingGame;
 
     private boolean isLeaderBoard;
     private boolean isPlayGame;
     private boolean isSettingGame;
     protected final Game game;
     public GameHome(Game game){
-        LeaderBoard = new Button("ButtonEdge/LeaderBoard.png","ButtonEdge/LeaderBoard.png",GameConstant.BUTTON_LEADERBOARD,false);
-        PlayGame = new Button("ButtonEdge/PlayGame.png","ButtonEdge/PlayGame.png",GameConstant.BUTTON_PLAYGAME,true);
-        SettingGame = new Button("ButtonEdge/SettingGame.png","ButtonEdge/SettingGame.png",GameConstant.BUTTON_SETTING,true);
+        LeaderBoard = new GameButton("ButtonEdge/LeaderBoard.png","ButtonEdge/LeaderBoard.png",GameConstant.BUTTON_LEADERBOARD,false);
+        PlayGame = new GameButton("ButtonEdge/PlayGame.png","ButtonEdge/PlayGame.png",GameConstant.BUTTON_PLAYGAME,true);
+        SettingGame = new GameButton("ButtonEdge/SettingGame.png","ButtonEdge/SettingGame.png",GameConstant.BUTTON_SETTING,true);
         this.game = game;
     }
 

@@ -11,6 +11,10 @@ import com.badlogic.gdx.utils.Align;
 import com.tetris8bit.game.Assets.GameAsset;
 import com.tetris8bit.game.Assets.GameConstant;
 import com.tetris8bit.game.BlockPuzzle8bit;
+import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenButton;
+import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenSideBar;
+import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenTetris;
+import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenTetrisPlay;
 
 public class GamePlayScreen implements Screen {
     private static GamePlayScreen gamePlayScreen;
@@ -22,6 +26,10 @@ public class GamePlayScreen implements Screen {
 
     public boolean onClickLatch;
 
+    GamePlayScreenButton gamePlayScreenButton;
+    GamePlayScreenTetris gamePlayScreenTetris;
+    GamePlayScreenSideBar gamePlayScreenSideBar;
+
     public GamePlayScreen(Game game){
         camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConstant.S_WIDTH, GameConstant.S_HEIGHT);
@@ -30,39 +38,34 @@ public class GamePlayScreen implements Screen {
         this.game=game;
 
         onClickLatch=false;
+
+        gamePlayScreenButton = new GamePlayScreenButton(game);
+        gamePlayScreenTetris = new GamePlayScreenTetris(game);
+        gamePlayScreenSideBar = new GamePlayScreenSideBar();
     }
 
 
     public static GamePlayScreen getInstance(Game game,boolean newscreen){
         if (newscreen){
             gamePlayScreen=new GamePlayScreen(game);
+            //gamePlayScreen.gamePlayScreenTetris.gamePlayScreenTetrisPlay=new GamePlayScreenTetrisPlay();
         }
         else {
             if(gamePlayScreen==null){
                 gamePlayScreen=new GamePlayScreen(game);
+                //gamePlayScreen.gamePlayScreenTetris.gamePlayScreenTetrisPlay=new GamePlayScreenTetrisPlay();
             }
         }
+        gamePlayScreen.gamePlayScreenTetris.gameState=0;
         return gamePlayScreen;
     }
     @Override
     public void render(float delta){
-
-
-    if (Gdx.input.isTouched()){
-        if (!onClickLatch){
-            onClickLatch=true;
-        }
-    }
-    if (onClickLatch){
-        onClickLatch=false;
-        game.setScreen(SettingScreen.getInstance(game,false,1));
-    }
-
-
-
-
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 0.8f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        gamePlayScreenButton.render(delta,batch);
+        gamePlayScreenTetris.render(delta,batch);
+        gamePlayScreenSideBar.render(delta,batch);
     }
     @Override
     public void resize(int width, int height) {

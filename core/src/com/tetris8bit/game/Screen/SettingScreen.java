@@ -5,12 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tetris8bit.game.Assets.Button;
+import com.tetris8bit.game.Assets.GameButton;
 import com.tetris8bit.game.Assets.GameConstant;
-import com.tetris8bit.game.BlockPuzzle8bit;
-import com.tetris8bit.game.TestGame;
 
 public class SettingScreen implements Screen {
 
@@ -26,20 +23,20 @@ public class SettingScreen implements Screen {
     private boolean isExitLatch;
     private boolean isCloseLatch;
 
-    private Button SettingBackground;
-    private Button SettingNewGame;
-    private Button SettingSounOn;
-    private Button SettingVibrate;
-    private Button SettingExit;
-    private Button SettingClose;
+    private GameButton SettingBackground;
+    private GameButton SettingNewGame;
+    private GameButton SettingSounOn;
+    private GameButton SettingVibrate;
+    private GameButton SettingExit;
+    private GameButton SettingClose;
 
     public SettingScreen(Game game){
-        SettingBackground = new Button("ButtonEdge/SettingBackground.png","ButtonEdge/SettingBackground.png",GameConstant.SettingBackGround,false);
-        SettingNewGame = new Button("ButtonEdge/NewGame.png","ButtonEdge/NewGame.png",GameConstant.SettingNewGame,false);
-        SettingSounOn = new Button("ButtonEdge/SoundOn.png","ButtonEdge/SoundOff.png",GameConstant.SettingSoundOn,false);
-        SettingVibrate = new Button("ButtonEdge/VibrateOn.png","ButtonEdge/VibrateOff.png",GameConstant.SettingVibrate,false);
-        SettingExit = new Button("ButtonEdge/Exit.png","ButtonEdge/Exit.png",GameConstant.SettingExit,false);
-        SettingClose = new Button("ButtonEdge/Close.png","ButtonEdge/Close.png",GameConstant.SettingClose,false);
+        SettingBackground = new GameButton("ButtonEdge/SettingBackground.png","ButtonEdge/SettingBackground.png",GameConstant.SettingBackGround,false);
+        SettingNewGame = new GameButton("ButtonEdge/NewGame.png","ButtonEdge/NewGame.png",GameConstant.SettingNewGame,false);
+        SettingSounOn = new GameButton("ButtonEdge/SoundOn.png","ButtonEdge/SoundOff.png",GameConstant.SettingSoundOn,false);
+        SettingVibrate = new GameButton("ButtonEdge/VibrateOn.png","ButtonEdge/VibrateOff.png",GameConstant.SettingVibrate,false);
+        SettingExit = new GameButton("ButtonEdge/Exit.png","ButtonEdge/Exit.png",GameConstant.SettingExit,false);
+        SettingClose = new GameButton("ButtonEdge/Close.png","ButtonEdge/Close.png",GameConstant.SettingClose,false);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConstant.S_WIDTH, GameConstant.S_HEIGHT);
         camera.update();
@@ -55,7 +52,7 @@ public class SettingScreen implements Screen {
         else {
             if (isNewGameLatch){
                 isNewGameLatch=false;
-                game.setScreen(MainMenuScreen.getInstance(game,false));
+                game.setScreen(GamePlayScreen.getInstance(game,true));
             }
         }
         if (SettingSounOn.checkOnClick()){

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class Button {
+public class GameButton {
     private Texture textureOnClick;
     private Texture textureOnRelease;
     private Vector2 texturePosition;
@@ -14,7 +14,7 @@ public class Button {
     public boolean isClick; // khi button duoc click
     public boolean isSound; // cho phep co tieng hay ko khi click
     public boolean isCircle;
-    public Button(String _textureOnClick,String _textureOnRelease,Vector2 _texturePositionCenter,boolean _isCircle){
+    public GameButton(String _textureOnClick,String _textureOnRelease,Vector2 _texturePositionCenter,boolean _isCircle){
         textureOnClick=new Texture(_textureOnClick);
         textureOnRelease=new Texture(_textureOnRelease);
         texturePosition=new Vector2();

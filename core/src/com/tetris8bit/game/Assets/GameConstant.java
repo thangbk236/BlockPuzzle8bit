@@ -53,5 +53,28 @@ public class GameConstant {
     public static final Vector2 SettingNewGame = new Vector2(SettingBackGround.x, SettingBackGround.y+SettingButtonSpace.y*3.0f+SettingButtonSize.y*3.0f);
     public static final Vector2 SettingExit = new Vector2(SettingBackGround.x, SettingBackGround.y-SettingButtonSpace.y*3.0f-SettingButtonSize.y*3.0f);
     public static final Vector2 SettingClose = new Vector2(BUTTON_SETTING.x,BUTTON_SETTING.y);
+    // toa do cac nut play
+    public static final Vector2 BUTTON_CENTER = new Vector2(420.0f,380.0f);
+    public static final Vector2 BUTTON_FIX = new Vector2(240.0f,210.0f);
+
+    public static final Vector2 BUTTON_FIRE = new Vector2(S_WIDTH-384/2.0f-100.0f,BUTTON_CENTER.y);
+    public static final Vector2 BUTTON_RUN = new Vector2(BUTTON_FIRE.x-384/2.0f-100.0f,BUTTON_CENTER.y-BUTTON_FIX.y);
+
+
+    public static final Vector2 BUTTON_UP = new Vector2(BUTTON_CENTER.x,BUTTON_CENTER.y+BUTTON_FIX.y);
+    public static final Vector2 BUTTON_DOWN = new Vector2(BUTTON_CENTER.x,BUTTON_CENTER.y-BUTTON_FIX.y);
+    public static final Vector2 BUTTON_LEFT = new Vector2(BUTTON_CENTER.x-BUTTON_FIX.x,BUTTON_CENTER.y);
+    public static final Vector2 BUTTON_RIGHT = new Vector2(BUTTON_CENTER.x+BUTTON_FIX.x,BUTTON_CENTER.y);
+    public static final Vector2 BUTTON_STOP =new Vector2(BUTTON_LEFT.x,BUTTON_LEFT.y+288+96);
+
+    // SCORE
+
+    public static final Vector2 HI_SCORE_STR = new Vector2((S_WIDTH+MAIN_GAME_GRID_OFFSET.x+MAIN_GAME_GRID.x*72)/2.0f,S_HEIGHT-72*1.0f);
+    public static final Vector2 SCORE_STR = new Vector2(HI_SCORE_STR.x,HI_SCORE_STR.y-72*3.5f);
+    public static final Vector2 LEVEL_STR = new Vector2(HI_SCORE_STR.x,HI_SCORE_STR.y-72*7.0f);
+
+    public static final Vector2 _HI_SCORE_STR = new Vector2(HI_SCORE_STR.x,HI_SCORE_STR.y-72*1.5f);
+    public static final Vector2 _SCORE_STR = new Vector2(HI_SCORE_STR.x,HI_SCORE_STR.y-72*5.0f);
+    public static final Vector2 _LEVEL_STR = new Vector2(HI_SCORE_STR.x,HI_SCORE_STR.y-72*8.5f);
 
 }

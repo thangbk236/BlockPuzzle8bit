@@ -16,6 +16,7 @@ public class GameAsset {
     public static FreeTypeFontGenerator generator;
 
     public static FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    public static BitmapFont GoodMorningBigfont;
     public static BitmapFont GoodMorningfont;
     public static FreeTypeFontGenerator GoodMorninggenerator;
     public static FreeTypeFontGenerator.FreeTypeFontParameter GoodMorningparameter;
@@ -60,5 +61,9 @@ public class GameAsset {
         GoodMorningparameter.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!'()>?:-";
         GoodMorningfont = GoodMorninggenerator.generateFont(GoodMorningparameter);
         GoodMorningfont.setColor(1.0f,1.0f,1.0f,1.0f);
+
+        GoodMorningparameter.size = 336;
+        GoodMorningBigfont = GoodMorninggenerator.generateFont(GoodMorningparameter);
+        GoodMorningBigfont.setColor(1.0f,1.0f,1.0f,1.0f);
     }
 }

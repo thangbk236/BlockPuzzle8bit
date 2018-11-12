@@ -1,5 +1,6 @@
 package com.tetris8bit.game.Screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,8 +11,8 @@ import com.tetris8bit.game.BlockPuzzle8bit;
 public class GameOverScreen implements Screen {
     SpriteBatch batch;
     Texture img;
-    protected final BlockPuzzle8bit game;
-    public GameOverScreen(BlockPuzzle8bit game){
+    protected final Game game;
+    public GameOverScreen(Game game){
         batch = new SpriteBatch();
         img = new Texture("badlogic.jpg");
         this.game=game;
