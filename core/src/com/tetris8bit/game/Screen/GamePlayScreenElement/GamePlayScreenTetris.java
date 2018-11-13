@@ -6,25 +6,26 @@ import com.badlogic.gdx.utils.Align;
 import com.tetris8bit.game.Assets.GameAsset;
 import com.tetris8bit.game.Assets.GameConstant;
 import com.tetris8bit.game.Assets.GameGrid;
-import com.tetris8bit.game.Screen.GameOverScreen;
-
+import com.tetris8bit.game.Assets.GameJson;
+import com.tetris8bit.game.Screen.MainMenuScreen;
 public class GamePlayScreenTetris {
     protected final Game game;
     private GameGrid gameGrid;
     public static int gameState;
     private float gameCountDownTime;
     private int gameCountDown;
+    private boolean gameSoundLatch;
     public GamePlayScreenTetrisPlay gamePlayScreenTetrisPlay;
     public GamePlayScreenTetris(Game game){
-        gamePlayScreenTetrisPlay = new GamePlayScreenTetrisPlay();
+        gamePlayScreenTetrisPlay=GameJson.gameJsonData;
         gameGrid=new GameGrid(1);
         gameCountDownTime=0.0f;
         gameCountDown=3;
+        gameSoundLatch=false;
         this.game = game;
     }
     public void render(float delta, SpriteBatch batch){
         gameGrid.GameUpdate(delta,batch);
-
         switch (gameState){
             case 0: // khi tao moi hoac tro ve tu nut setting thi se co 1 bo dem lui 3s
                 ProcessCountDown(delta,batch);
@@ -40,8 +41,6 @@ public class GamePlayScreenTetris {
                 break;
         }
     }
-
-
     public void ProcessCountDown(float delta, SpriteBatch batch){
 
         if (gameCountDown>0){
@@ -58,18 +57,21 @@ public class GamePlayScreenTetris {
             gameState=3;    // chuyen sang man hinh game play
             gameCountDown=3;    // reset lai bo dem
         }
-
-
-
     }
     public void ProcessStop(float delta, SpriteBatch batch){
         gamePlayScreenTetrisPlay.GameDraw(batch);
         batch.begin();
         GameAsset.GoodMorningfont.draw(batch,"PAUSE",GameConstant._TO_STR.x,GameConstant._TO_STR.y,0, Align.center,false);
         batch.end();
-
     }
     public void ProcessGameOver(float delta, SpriteBatch batch){
+        if (!gameSoundLatch){
+            gameSoundLatch=true;
+            if (GamePlayScreenTetrisPlay.isSound){
+                GameAsset.gameOverSound.play();
+            }
+            GameJson.gameJsonData=new GamePlayScreenTetrisPlay();
+        }
         gamePlayScreenTetrisPlay.GameDraw(batch);
         if (gameCountDown>0){
             batch.begin();
@@ -77,20 +79,19 @@ public class GamePlayScreenTetris {
             batch.end();
             gameCountDownTime+=delta;
             if (gameCountDownTime>=1.0f){
-                gameCountDownTime-=1.0f;
+                gameCountDownTime=0.0f;
                 gameCountDown-=1;
             }
         }
         else {
             gameCountDown=3;
-            game.setScreen(new GameOverScreen(game));
+            gameSoundLatch=false;
+            game.setScreen(MainMenuScreen.getInstance(game,false));
         }
     }
     public void ProcessGamePlay(float delta, SpriteBatch batch){
         gamePlayScreenTetrisPlay.render(delta,batch);
-
     }
-
     public void dispose(){
 
     }

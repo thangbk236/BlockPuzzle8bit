@@ -32,12 +32,12 @@ public class TestGame implements Screen {
 
     public TestGame(Game game){
 
-        SettingBackground = new GameButton("ButtonEdge/SettingBackground.png","ButtonEdge/SettingBackground.png",GameConstant.SettingBackGround,false);
-        SettingNewGame = new GameButton("ButtonEdge/NewGame.png","ButtonEdge/NewGame.png",GameConstant.SettingNewGame,false);
-        SettingSounOn = new GameButton("ButtonEdge/SoundOn.png","ButtonEdge/SoundOff.png",GameConstant.SettingSoundOn,false);
-        SettingVibrate = new GameButton("ButtonEdge/VibrateOn.png","ButtonEdge/VibrateOff.png",GameConstant.SettingVibrate,false);
-        SettingExit = new GameButton("ButtonEdge/Exit.png","ButtonEdge/Exit.png",GameConstant.SettingExit,false);
-        SettingClose = new GameButton("ButtonEdge/Close.png","ButtonEdge/Close.png",GameConstant.SettingClose,false);
+        SettingBackground = new GameButton("ButtonEdge/SettingBackground.png","ButtonEdge/SettingBackground.png","Music/move.wav",GameConstant.SettingBackGround,false);
+        SettingNewGame = new GameButton("ButtonEdge/NewGame.png","ButtonEdge/NewGame.png","Music/move.wav",GameConstant.SettingNewGame,false);
+        SettingSounOn = new GameButton("ButtonEdge/SoundOn.png","ButtonEdge/SoundOff.png","Music/move.wav",GameConstant.SettingSoundOn,false);
+        SettingVibrate = new GameButton("ButtonEdge/VibrateOn.png","ButtonEdge/VibrateOff.png","Music/move.wav",GameConstant.SettingVibrate,false);
+        SettingExit = new GameButton("ButtonEdge/Exit.png","ButtonEdge/Exit.png","Music/move.wav",GameConstant.SettingExit,false);
+        SettingClose = new GameButton("ButtonEdge/Close.png","ButtonEdge/Close.png","Music/move.wav",GameConstant.SettingClose,false);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConstant.S_WIDTH, GameConstant.S_HEIGHT);
         camera.update();

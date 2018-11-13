@@ -17,7 +17,6 @@ import com.tetris8bit.game.BlockPuzzle8bit;
 public class MainMenuScreen implements Screen {
     private OrthographicCamera camera;
     SpriteBatch batch;
-    Texture img;
     protected final Game game;
     private int gameId;
     protected static MainMenuScreen mainMenuScreen;

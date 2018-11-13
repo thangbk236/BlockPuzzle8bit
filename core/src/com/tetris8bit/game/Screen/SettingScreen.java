@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tetris8bit.game.Assets.GameButton;
 import com.tetris8bit.game.Assets.GameConstant;
+import com.tetris8bit.game.Assets.GameJson;
+import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenTetrisPlay;
 
 public class SettingScreen implements Screen {
 
@@ -31,12 +33,14 @@ public class SettingScreen implements Screen {
     private GameButton SettingClose;
 
     public SettingScreen(Game game){
-        SettingBackground = new GameButton("ButtonEdge/SettingBackground.png","ButtonEdge/SettingBackground.png",GameConstant.SettingBackGround,false);
-        SettingNewGame = new GameButton("ButtonEdge/NewGame.png","ButtonEdge/NewGame.png",GameConstant.SettingNewGame,false);
-        SettingSounOn = new GameButton("ButtonEdge/SoundOn.png","ButtonEdge/SoundOff.png",GameConstant.SettingSoundOn,false);
-        SettingVibrate = new GameButton("ButtonEdge/VibrateOn.png","ButtonEdge/VibrateOff.png",GameConstant.SettingVibrate,false);
-        SettingExit = new GameButton("ButtonEdge/Exit.png","ButtonEdge/Exit.png",GameConstant.SettingExit,false);
-        SettingClose = new GameButton("ButtonEdge/Close.png","ButtonEdge/Close.png",GameConstant.SettingClose,false);
+        SettingBackground = new GameButton("ButtonEdge/SettingBackground.png","ButtonEdge/SettingBackground.png","Music/move.wav",GameConstant.SettingBackGround,false);
+        SettingNewGame = new GameButton("ButtonEdge/NewGame.png","ButtonEdge/NewGame.png","Music/move.wav",GameConstant.SettingNewGame,false);
+        SettingSounOn = new GameButton("ButtonEdge/SoundOn.png","ButtonEdge/SoundOff.png","Music/move.wav",GameConstant.SettingSoundOn,false);
+        SettingVibrate = new GameButton("ButtonEdge/VibrateOn.png","ButtonEdge/VibrateOff.png","Music/move.wav",GameConstant.SettingVibrate,false);
+        SettingExit = new GameButton("ButtonEdge/Exit.png","ButtonEdge/Exit.png","Music/move.wav",GameConstant.SettingExit,false);
+        SettingClose = new GameButton("ButtonEdge/Close.png","ButtonEdge/Close.png","Music/move.wav",GameConstant.SettingClose,false);
+        SettingSounOn.isClick=GamePlayScreenTetrisPlay.isSound;
+        SettingVibrate.isClick=GamePlayScreenTetrisPlay.isVibrate;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConstant.S_WIDTH, GameConstant.S_HEIGHT);
         camera.update();
@@ -47,11 +51,14 @@ public class SettingScreen implements Screen {
         if (SettingNewGame.checkOnClick()){
             if (!isNewGameLatch){
                 isNewGameLatch=true;
+                SettingNewGame.isClick=true;
             }
         }
         else {
             if (isNewGameLatch){
                 isNewGameLatch=false;
+                SettingNewGame.isClick=false;
+                GameJson.gameJsonData=new GamePlayScreenTetrisPlay();
                 game.setScreen(GamePlayScreen.getInstance(game,true));
             }
         }
@@ -70,12 +77,13 @@ public class SettingScreen implements Screen {
                 else {
                     SettingSounOn.isClick=true;
                 }
+                GameJson.gameJsonData.isSound=SettingSounOn.isClick;
+                GameJson.save();
             }
         }
         if (SettingVibrate.checkOnClick()){
             if (!isVibrateOnLatch){
                 isVibrateOnLatch=true;
-
             }
         }
         else {
@@ -87,29 +95,33 @@ public class SettingScreen implements Screen {
                 else {
                     SettingVibrate.isClick=true;
                 }
+                GameJson.gameJsonData.isVibrate=SettingVibrate.isClick;
+                GameJson.save();
             }
         }
         if (SettingExit.checkOnClick()){
             if (!isExitLatch){
                 isExitLatch=true;
-
+                SettingExit.isClick=true;
             }
         }
         else {
             if (isExitLatch){
                 isExitLatch=false;
+                SettingExit.isClick=false;
                 System.exit(0);
             }
         }
         if (SettingClose.checkOnClick()){
             if(!isCloseLatch){
                 isCloseLatch=true;
-
+                SettingClose.isClick=true;
             }
         }
         else {
             if (isCloseLatch){
                 isCloseLatch=false;
+                SettingClose.isClick=false;
                 switch (gameId){
                     case 0: // duoc goi tu main menu screen
                         game.setScreen(MainMenuScreen.getInstance(game,false));
@@ -180,5 +192,11 @@ public class SettingScreen implements Screen {
     public void dispose() {
         // TODO Auto-generated method stub
         batch.dispose();
+        SettingBackground.dipose();
+        SettingNewGame.dipose();
+        SettingSounOn.dipose();
+        SettingVibrate.dipose();
+        SettingExit.dipose();
+        SettingClose.dipose();
     }
 }

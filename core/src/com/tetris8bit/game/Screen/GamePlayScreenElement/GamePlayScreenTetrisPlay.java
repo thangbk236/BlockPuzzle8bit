@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.tetris8bit.game.Assets.GameAsset;
 import com.tetris8bit.game.Assets.GameConstant;
-import com.tetris8bit.game.Assets.GameMap;
+import com.tetris8bit.game.Assets.GameJson;
 
 public class GamePlayScreenTetrisPlay {
     // Matrix
@@ -19,18 +19,15 @@ public class GamePlayScreenTetrisPlay {
     //Positon
     public Vector2 TetrisPosition;
     public Vector2 TetrisPositionRotate;
-
     public Vector2 MatrixMove;
     //Limit Dir
     public boolean LimitRotate;
     public boolean LimitRotateLatch;
     public boolean LimitRun;
-
     public boolean LimitUp;     // trang thai gioi han huong di cua tank
     public boolean LimitDown;
     public boolean LimitLeft;
     public boolean LimitRight;
-
     public boolean isOver;
     public boolean inFloor;
     public boolean isDown;
@@ -38,11 +35,9 @@ public class GamePlayScreenTetrisPlay {
     public static boolean isGameOver;
     public boolean _isGameOver;
     public static float isGameOverTime;
-
     //Tetris level
     public int TetrisLine;
     public int TetrisLevel;
-
     //TetrisButtonTime
     public boolean TimeLeftLatch;
     public boolean TimeRightLatch;
@@ -58,12 +53,15 @@ public class GamePlayScreenTetrisPlay {
     public int SumScore;
     public int ScoreVal;
     public boolean isSumScore;
-
+    //Score
+    public static int HI_SCORE;
+    public int SCORE;
+    public int LEVEL;
+    public int MAX_SCORE;
+    //public int
+    public static boolean isSound=true;
+    public static boolean isVibrate=true;
     public float FloorTime;
-
-    GameMap gameMap;
-
-
     public GamePlayScreenTetrisPlay(){
         isGameOver=false;
         _isGameOver=false;
@@ -78,16 +76,41 @@ public class GamePlayScreenTetrisPlay {
         LimitRight = false;
         FirstPlay = true;
         _DownSpeed=2.5f;
-        GamePlayScreenSideBar.SCORE=0;
-        GamePlayScreenSideBar.LEVEL=0;
         isGameOverTime=0.0f;
         TetrisLine=0;
         TetrisPositionRotate = new Vector2();
-        // load map
-        gameMap = new GameMap();
-        MapGrid=new int[gameMap.MapGrid.length][gameMap.MapGrid[0].length];
-        this.MapGrid=gameMap.MapGrid;
+        MAX_SCORE=9999999;
+        SCORE=0;
+        LEVEL=0;
+        InitMap();
         InitTetris();
+    }
+    public void InitNewData(){
+        isVibrate=true;
+        isSound=true;
+
+    }
+    public void InitMap(){
+        int[][] _MapGrid = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},// cot 0
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},// cot 1
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};// cot n
+        MapGrid = new int[_MapGrid.length][_MapGrid[0].length];
+        MapGrid = _MapGrid;
     }
     public void render(float deltatime, SpriteBatch batch){
         CheckCollision();
@@ -356,9 +379,20 @@ public class GamePlayScreenTetrisPlay {
         }
         if (isSumScore){
             isSumScore=false;
-            GamePlayScreenSideBar.SCORE+=GetScore(SumScore);
-            GamePlayScreenSideBar.LEVEL=GetLevel(TetrisLine);
+            SCORE+=GetScore(SumScore);
+            LEVEL=GetLevel(TetrisLine);
+            if (SCORE>MAX_SCORE){
+                SCORE=MAX_SCORE;
+            }
+            if (SCORE>HI_SCORE){
+                HI_SCORE=SCORE;
+            }
+            if (isSound){
+                GameAsset.eatSound.play();
+            }
+            if (isVibrate){
 
+            }
             //if (TetrisJson.tetrisData.isMusic){
             //    GameAsset.eat.play();
             //}
@@ -371,22 +405,22 @@ public class GamePlayScreenTetrisPlay {
     public int GetScore(int index){
         switch (index){
             case 1:
-                ScoreVal=1;
+                ScoreVal=100;
                 break;
             case 2:
-                ScoreVal=3;
+                ScoreVal=300;
                 break;
             case 3:
-                ScoreVal=5;
+                ScoreVal=500;
                 break;
             case 4:
-                ScoreVal=8;
+                ScoreVal=800;
                 break;
             default:
                 ScoreVal=0;
                 break;
         }
-        return ScoreVal+GamePlayScreenSideBar.LEVEL;//+GameSidebar.LEVEL;
+        return ScoreVal;//+GamePlayScreenSideBar.LEVEL;//+GameSidebar.LEVEL;
     }
     public int GetLevel(int index){
         return index/50;

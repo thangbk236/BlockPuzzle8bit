@@ -5,16 +5,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.audio.Sound;
+import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenTetrisPlay;
 
 public class GameButton {
     private Texture textureOnClick;
     private Texture textureOnRelease;
     private Vector2 texturePosition;
     private Vector2 texturePositionCenter;
+    private boolean isSound;
+    private Sound sound;
     public boolean isClick; // khi button duoc click
-    public boolean isSound; // cho phep co tieng hay ko khi click
     public boolean isCircle;
-    public GameButton(String _textureOnClick,String _textureOnRelease,Vector2 _texturePositionCenter,boolean _isCircle){
+    public GameButton(String _textureOnClick,String _textureOnRelease,String soundButton,Vector2 _texturePositionCenter,boolean _isCircle){
         textureOnClick=new Texture(_textureOnClick);
         textureOnRelease=new Texture(_textureOnRelease);
         texturePosition=new Vector2();
@@ -22,6 +25,7 @@ public class GameButton {
         isCircle=_isCircle;
         this.texturePositionCenter.set(_texturePositionCenter.x,_texturePositionCenter.y);
         this.texturePosition.set(texturePositionCenter.x-textureOnClick.getWidth()/2.0f,texturePositionCenter.y-textureOnClick.getHeight()/2.0f);
+        sound=Gdx.audio.newSound(Gdx.files.internal(soundButton));
     }
 
     public boolean checkOnClick(){
@@ -31,12 +35,27 @@ public class GameButton {
                 // tinh toan xem toa do touch co nam trong hinh tron hay khong
                 for (int i = 0; i < GameTouch.touchnum; i++) {
                     if ((GameTouch.touchX[i] - texturePositionCenter.x) * (GameTouch.touchX[i] - texturePositionCenter.x) + (GameTouch.touchY[i] - texturePositionCenter.y) * (GameTouch.touchY[i] - texturePositionCenter.y) <= textureOnClick.getWidth() * textureOnClick.getWidth() / 4.0f) {
+                        //isClick=true;
+                        if (isSound){
+                            if(GamePlayScreenTetrisPlay.isSound){
+                                sound.play();
+                            }
+                            isSound=false;
+                        }
+
                         return true;
                     }
                 }
             } else {  // neu button co dang hinh chu nhat
                 for (int i = 0; i < GameTouch.touchnum; i++){
                     if((GameTouch.touchX[i]>=texturePositionCenter.x-textureOnClick.getWidth()/2.0f)&&(GameTouch.touchX[i]<=texturePositionCenter.x+textureOnClick.getWidth()/2.0f)&&(GameTouch.touchY[i]>=texturePositionCenter.y-textureOnClick.getHeight()/2.0f)&&(GameTouch.touchY[i]<=texturePositionCenter.y+textureOnClick.getHeight()/2.0f)){
+                        //isClick=true;
+                        if (isSound){
+                            if(GamePlayScreenTetrisPlay.isSound){
+                                sound.play();
+                            }
+                            isSound=false;
+                        }
                         return true;
                     }
                 }
@@ -53,12 +72,7 @@ public class GameButton {
         }
         else {
             batch.draw(textureOnRelease,texturePosition.x,texturePosition.y);
-        }
-        if(isSound){
-
-        }
-        else {
-
+            isSound=true;
         }
         batch.end();
     }

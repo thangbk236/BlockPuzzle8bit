@@ -5,16 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Align;
-import com.tetris8bit.game.Assets.GameAsset;
 import com.tetris8bit.game.Assets.GameConstant;
-import com.tetris8bit.game.BlockPuzzle8bit;
+import com.tetris8bit.game.Assets.GameJson;
 import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenButton;
 import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenSideBar;
 import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenTetris;
-import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenTetrisPlay;
 
 public class GamePlayScreen implements Screen {
     private static GamePlayScreen gamePlayScreen;
@@ -25,6 +21,7 @@ public class GamePlayScreen implements Screen {
     private int gameId;
 
     public boolean onClickLatch;
+    public boolean onSaveToJson;
 
     GamePlayScreenButton gamePlayScreenButton;
     GamePlayScreenTetris gamePlayScreenTetris;
@@ -85,13 +82,16 @@ public class GamePlayScreen implements Screen {
     @Override
     public void pause() {
         // TODO Auto-generated method stub
-
+        if (!onSaveToJson){
+            onSaveToJson=true;
+            GameJson.save();
+        }
     }
 
     @Override
     public void resume() {
         // TODO Auto-generated method stub
-
+        onSaveToJson=false;
     }
 
     @Override

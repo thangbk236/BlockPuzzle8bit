@@ -17,9 +17,9 @@ public class GameHome {
     private boolean isSettingGame;
     protected final Game game;
     public GameHome(Game game){
-        LeaderBoard = new GameButton("ButtonEdge/LeaderBoard.png","ButtonEdge/LeaderBoard.png",GameConstant.BUTTON_LEADERBOARD,false);
-        PlayGame = new GameButton("ButtonEdge/PlayGame.png","ButtonEdge/PlayGame.png",GameConstant.BUTTON_PLAYGAME,true);
-        SettingGame = new GameButton("ButtonEdge/SettingGame.png","ButtonEdge/SettingGame.png",GameConstant.BUTTON_SETTING,true);
+        LeaderBoard = new GameButton("ButtonEdge/LeaderBoard.png","ButtonEdge/LeaderBoard.png","Music/move.wav",GameConstant.BUTTON_LEADERBOARD,false);
+        PlayGame = new GameButton("ButtonEdge/PlayGame.png","ButtonEdge/PlayGame.png","Music/move.wav",GameConstant.BUTTON_PLAYGAME,true);
+        SettingGame = new GameButton("ButtonEdge/SettingGame.png","ButtonEdge/SettingGame.png","Music/move.wav",GameConstant.BUTTON_SETTING,true);
         this.game = game;
     }
 
@@ -27,34 +27,40 @@ public class GameHome {
         if (LeaderBoard.checkOnClick()){
             if (!isLeaderBoard){
                 isLeaderBoard=true;
+                LeaderBoard.isClick=true;
             }
         }
         else {
             if (isLeaderBoard){
                 isLeaderBoard=false;
+                LeaderBoard.isClick=false;
                 //game.setScreen(SettingScreen.getInstance(game,false,0));
             }
         }
         if (PlayGame.checkOnClick()){
             if (!isPlayGame){
                 isPlayGame=true;
+                PlayGame.isClick=true;
             }
         }
         else {
             if (isPlayGame){
                 isPlayGame=false;
-                game.setScreen(GamePlayScreen.getInstance(game,false));
+                PlayGame.isClick=false;
+                game.setScreen(GamePlayScreen.getInstance(game,true));
             }
         }
         if (SettingGame.checkOnClick()){
             if (!isSettingGame){
                 isSettingGame=true;
+                SettingGame.isClick=true;
             }
         }
         else {
             if (isSettingGame){
                 isSettingGame=false;
-                game.setScreen(SettingScreen.getInstance(game,false,0));
+                SettingGame.isClick=false;
+                game.setScreen(SettingScreen.getInstance(game,true,0));
             }
         }
     }

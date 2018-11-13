@@ -1,6 +1,7 @@
 package com.tetris8bit.game.Assets;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,11 +27,25 @@ public class GameAsset {
     public static Sprite BrickSprite48;
     public static Texture BrickTexture72;
     public static Sprite BrickSprite72;
-
+    //GameSound
+    public static Sound eatSound;
+    public static Sound gameOverSound;
+    public static Sound moveSound;
+    public static Sound rotateSound;
+    public static Sound runSound;
     public GameAsset(){
 
         GameLoadFont();
         GameLoadBrick();
+        GameLoadSound();
+    }
+    public void GameLoadSound(){
+        eatSound=Gdx.audio.newSound(Gdx.files.internal("Music/eat.wav"));
+        gameOverSound=Gdx.audio.newSound(Gdx.files.internal("Music/gameover.wav"));
+        moveSound=Gdx.audio.newSound(Gdx.files.internal("Music/move.wav"));
+        rotateSound=Gdx.audio.newSound(Gdx.files.internal("Music/rotate.wav"));
+        runSound=Gdx.audio.newSound(Gdx.files.internal("Music/run.wav"));
+
     }
 
     public void GameLoadBrick(){

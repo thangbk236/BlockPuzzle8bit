@@ -29,14 +29,14 @@ public class GamePlayScreenButton {
     public boolean isPlaySettingButton;
 
     public GamePlayScreenButton(Game game){
-        GamePlayUpButton = new GameButton("Button/GamePlayUpButton.png","Button/GamePlayUpButton.png",GameConstant.BUTTON_UP,true);
-        GamePlayDownButton = new GameButton("Button/GamePlayDownButton.png","Button/GamePlayDownButton.png",GameConstant.BUTTON_DOWN,true);
-        GamePlayLeftButton = new GameButton("Button/GamePlayLeftButton.png","Button/GamePlayLeftButton.png",GameConstant.BUTTON_LEFT,true);
-        GamePlayRightButton = new GameButton("Button/GamePlayRightButton.png","Button/GamePlayRightButton.png",GameConstant.BUTTON_RIGHT,true);
-        GamePlayFireButton = new GameButton("Button/GamePlayFireButton.png","Button/GamePlayFireButton.png",GameConstant.BUTTON_FIRE,true);
-        GamePlayRunButton = new GameButton("Button/GamePlayRunButton.png","Button/GamePlayRunButton.png",GameConstant.BUTTON_RUN,true);
-        GamePlayStopButton = new GameButton("Button/GamePlayStopButton.png","Button/GamePlayStopButton.png",GameConstant.BUTTON_STOP,true);
-        GamePlaySettingButton = new GameButton("ButtonEdge/SettingGame.png","ButtonEdge/SettingGame.png",GameConstant.BUTTON_SETTING,true);
+        GamePlayUpButton = new GameButton("Button/GamePlayUpButton.png","Button/_GamePlayUpButton.png","Music/move.wav",GameConstant.BUTTON_UP,true);
+        GamePlayDownButton = new GameButton("Button/GamePlayDownButton.png","Button/_GamePlayDownButton.png","Music/move.wav",GameConstant.BUTTON_DOWN,true);
+        GamePlayLeftButton = new GameButton("Button/GamePlayLeftButton.png","Button/_GamePlayLeftButton.png","Music/move.wav",GameConstant.BUTTON_LEFT,true);
+        GamePlayRightButton = new GameButton("Button/GamePlayRightButton.png","Button/_GamePlayRightButton.png","Music/move.wav",GameConstant.BUTTON_RIGHT,true);
+        GamePlayFireButton = new GameButton("Button/GamePlayFireButton.png","Button/_GamePlayFireButton.png","Music/rotate.wav",GameConstant.BUTTON_FIRE,true);
+        GamePlayRunButton = new GameButton("Button/GamePlayRunButton.png","Button/_GamePlayRunButton.png","Music/run.wav",GameConstant.BUTTON_RUN,true);
+        GamePlayStopButton = new GameButton("Button/GamePlayStopButton.png","Button/_GamePlayStopButton.png","Music/move.wav",GameConstant.BUTTON_STOP,true);
+        GamePlaySettingButton = new GameButton("ButtonEdge/SettingGame.png","ButtonEdge/SettingGame.png","Music/move.wav",GameConstant.BUTTON_SETTING,true);
         this.game=game;
 
     }
@@ -44,78 +44,91 @@ public class GamePlayScreenButton {
         if (GamePlayUpButton.checkOnClick()){
             if (!isUpButton){
                 isUpButton=true;
+                GamePlayUpButton.isClick=true;
             }
         }
         else {
             if (isUpButton){
                 isUpButton=false;
+                GamePlayUpButton.isClick=false;
             }
         }
 
         if (GamePlayDownButton.checkOnClick()){
             if (!isDownButton){
                 isDownButton=true;
+                GamePlayDownButton.isClick=true;
             }
         }
         else {
             if (isDownButton){
                 isDownButton=false;
+                GamePlayDownButton.isClick=false;
             }
         }
 
         if (GamePlayLeftButton.checkOnClick()){
             if (!isLeftButton){
                 isLeftButton=true;
+                GamePlayLeftButton.isClick=true;
             }
         }
         else {
             if (isLeftButton){
                 isLeftButton=false;
+                GamePlayLeftButton.isClick=false;
             }
         }
 
         if (GamePlayRightButton.checkOnClick()){
             if (!isRightButton){
                 isRightButton=true;
+                GamePlayRightButton.isClick=true;
             }
         }
         else {
             if (isRightButton){
                 isRightButton=false;
+                GamePlayRightButton.isClick=false;
             }
         }
 
         if (GamePlayFireButton.checkOnClick()){
             if (!isFireButton){
                 isFireButton=true;
+                GamePlayFireButton.isClick=true;
             }
         }
         else {
             if (isFireButton){
                 isFireButton=false;
+                GamePlayFireButton.isClick=false;
             }
         }
 
         if (GamePlayRunButton.checkOnClick()){
             if (!isRunButton){
                 isRunButton=true;
+                GamePlayRunButton.isClick=true;
             }
         }
         else {
             if (isRunButton){
                 isRunButton=false;
+                GamePlayRunButton.isClick=false;
             }
         }
 
         if (GamePlayStopButton.checkOnClick()){
             if (!isStopButton){
                 isStopButton=true;
+                GamePlayStopButton.isClick=true;
             }
         }
         else {
             if (isStopButton){
                 isStopButton=false;
-
+                GamePlayStopButton.isClick=false;
                 if (GamePlayScreenTetris.gameState==3){
                     GamePlayScreenTetris.gameState=1;
 
@@ -130,12 +143,14 @@ public class GamePlayScreenButton {
         if (GamePlaySettingButton.checkOnClick()){
             if (!isPlaySettingButton){
                 isPlaySettingButton=true;
+                GamePlaySettingButton.isClick=true;
             }
         }
         else {
             if (isPlaySettingButton){
                 isPlaySettingButton=false;
-                game.setScreen(SettingScreen.getInstance(game,false,1));
+                GamePlaySettingButton.isClick=false;
+                game.setScreen(SettingScreen.getInstance(game,true,1));
             }
         }
     }
