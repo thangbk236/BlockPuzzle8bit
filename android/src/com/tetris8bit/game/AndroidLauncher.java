@@ -40,8 +40,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import com.tetris8bit.game.BlockPuzzle8bit;
-
 public class AndroidLauncher extends AndroidApplication implements PlayServices {
 	//----------------------------------------------------------------------------------------------
 	//ADS
@@ -67,7 +65,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        View gameView = initializeForView(new BlockPuzzle8bit(this), config);
+		View gameView = initializeForView(new BlockPuzzle8bit(this), config);
 		setupAds();
 		RelativeLayout layout = new RelativeLayout(this);
 		layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -362,10 +360,11 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	//----------------------------------------------------------------------------------------------
 	@Override
 	public void submitScore(final int score){
-		if(IsSignedIn){
+		if(isSignedIn()){
 			// Example
 			//mLeaderboardsClient.submitScore(getString(R.string.leaderboard_my_score), score);
 			// Write code in here
+			mLeaderboardsClient.submitScore(getString(R.string.leaderboard_block_puzzle_8bit_score), score);
 		}
 	}
 
@@ -373,13 +372,13 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	public void showLeaderBoard() {
 		if(isSignedIn()){
 			// Example
-			/*mLeaderboardsClient.getLeaderboardIntent(getString(R.string.leaderboard_my_score))
+			mLeaderboardsClient.getLeaderboardIntent(getString(R.string.leaderboard_block_puzzle_8bit_score))
 					.addOnSuccessListener(new OnSuccessListener<Intent>() {
 						@Override
 						public void onSuccess(Intent intent) {
 							startActivityForResult(intent, RC_LEADERBOARD_UI);
 						}
-					});*/
+					});
 			// Write code in here
 
 		}
@@ -399,7 +398,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	}
 	@Override
 	public void unlockAchievements(){
-		if (IsSignedIn) {
+		if (isSignedIn()) {
 			// Example
 			// mAchievementsClient.unlock(getString(R.string.achievement_blue_medal));
 			// Write code in here
