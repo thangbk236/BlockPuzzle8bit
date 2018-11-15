@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
 <resources>
     <!-- app_id -->
-    <string name="app_id" translatable="false">214065640606</string>
+    <string name="app_id" translatable="false">241990951161</string>
+    <!-- package_name -->
+    <string name="package_name" translatable="false">com.tetris8bit.game</string>
+    <!-- leaderboard Block Puzzle 8bit Score -->
+    <string name="leaderboard_block_puzzle_8bit_score" translatable="false">CgkI-cGjvoUHEAIQAQ</string>
     <!-- Ads -->
-    <string name="BANNER_AD_UNIT_ID" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="INTERSTITIAL_UNIT_ID" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="REWARDEDVIDEO_UNIT_ID" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
-
-
+    <string name="BANNER_AD_UNIT_ID" translatable="false">ca-app-pub-9652586215960570/7559027064</string>
+    <string name="INTERSTITIAL_UNIT_ID" translatable="false">ca-app-pub-9652586215960570/3478459058</string>
+    <string name="REWARDEDVIDEO_UNIT_ID" translatable="false">ca-app-pub-9652586215960570/6766579981</string>
 
 </resources>

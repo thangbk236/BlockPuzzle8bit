@@ -8,7 +8,7 @@ import com.tetris8bit.game.Screen.MainMenuScreen;
 public class BlockPuzzle8bit extends Game {
 
 	GameAsset gameAsset;
-	private PlayServices playservices;
+	public static PlayServices playservices;
 
 	public BlockPuzzle8bit(PlayServices playservices) {
 		this.playservices = playservices;

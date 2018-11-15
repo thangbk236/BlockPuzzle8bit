@@ -41,6 +41,7 @@ public class GamePlayScreenButton {
 
     }
     public void CheckButtonEvent(float delta){
+        GamePlayUpButton.isClickLatch=true;
         if (GamePlayUpButton.checkOnClick()){
             if (!isUpButton){
                 isUpButton=true;
@@ -53,7 +54,7 @@ public class GamePlayScreenButton {
                 GamePlayUpButton.isClick=false;
             }
         }
-
+        GamePlayDownButton.isClickLatch=true;
         if (GamePlayDownButton.checkOnClick()){
             if (!isDownButton){
                 isDownButton=true;
@@ -66,7 +67,7 @@ public class GamePlayScreenButton {
                 GamePlayDownButton.isClick=false;
             }
         }
-
+        GamePlayLeftButton.isClickLatch=true;
         if (GamePlayLeftButton.checkOnClick()){
             if (!isLeftButton){
                 isLeftButton=true;
@@ -79,7 +80,7 @@ public class GamePlayScreenButton {
                 GamePlayLeftButton.isClick=false;
             }
         }
-
+        GamePlayRightButton.isClickLatch=true;
         if (GamePlayRightButton.checkOnClick()){
             if (!isRightButton){
                 isRightButton=true;
@@ -92,7 +93,7 @@ public class GamePlayScreenButton {
                 GamePlayRightButton.isClick=false;
             }
         }
-
+        GamePlayFireButton.isClickLatch=true;
         if (GamePlayFireButton.checkOnClick()){
             if (!isFireButton){
                 isFireButton=true;
@@ -105,7 +106,7 @@ public class GamePlayScreenButton {
                 GamePlayFireButton.isClick=false;
             }
         }
-
+        GamePlayRunButton.isClickLatch=true;
         if (GamePlayRunButton.checkOnClick()){
             if (!isRunButton){
                 isRunButton=true;
@@ -118,7 +119,7 @@ public class GamePlayScreenButton {
                 GamePlayRunButton.isClick=false;
             }
         }
-
+        GamePlayStopButton.isClickLatch=true;
         if (GamePlayStopButton.checkOnClick()){
             if (!isStopButton){
                 isStopButton=true;
@@ -129,9 +130,8 @@ public class GamePlayScreenButton {
             if (isStopButton){
                 isStopButton=false;
                 GamePlayStopButton.isClick=false;
-                if (GamePlayScreenTetris.gameState==3){
+                if (GamePlayScreenTetris.gameState==3||GamePlayScreenTetris.gameState==0){
                     GamePlayScreenTetris.gameState=1;
-
                 }
                 else if (GamePlayScreenTetris.gameState==1){
                     GamePlayScreenTetris.gameState=3;
@@ -139,7 +139,7 @@ public class GamePlayScreenButton {
 
             }
         }
-
+        GamePlaySettingButton.isClickLatch=true;
         if (GamePlaySettingButton.checkOnClick()){
             if (!isPlaySettingButton){
                 isPlaySettingButton=true;

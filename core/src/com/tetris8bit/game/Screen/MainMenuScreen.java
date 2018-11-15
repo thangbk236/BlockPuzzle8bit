@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
 import com.tetris8bit.game.Assets.GameAsset;
 import com.tetris8bit.game.Assets.GameConstant;
 import com.tetris8bit.game.Assets.GameGrid;
 import com.tetris8bit.game.Assets.GameHome;
+import com.tetris8bit.game.Assets.GameJson;
 import com.tetris8bit.game.BlockPuzzle8bit;
 
 public class MainMenuScreen implements Screen {
@@ -22,7 +24,10 @@ public class MainMenuScreen implements Screen {
     protected static MainMenuScreen mainMenuScreen;
     GameGrid gameGrid;
     GameHome gameHome;
-
+    private float timeToShowAds;
+    private boolean timeToShowAdsLatch;
+    public static boolean firstTimePlay=true;
+    public boolean onSaveToJson;
     public MainMenuScreen(Game game){
         camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConstant.S_WIDTH, GameConstant.S_HEIGHT);
@@ -31,6 +36,8 @@ public class MainMenuScreen implements Screen {
         this.game=game;
         gameGrid=new GameGrid(0);
         gameHome=new GameHome(game);
+        timeToShowAds=0.0f;
+        timeToShowAdsLatch=false;
     }
 
     public static MainMenuScreen getInstance(Game game,boolean newscreen){
@@ -46,6 +53,31 @@ public class MainMenuScreen implements Screen {
     }
     @Override
     public void render(float delta){
+        if (!firstTimePlay){
+            timeToShowAds+=delta;
+            if (timeToShowAds>3.0f){//sau 3s thi cho hien thi ads
+                if (!timeToShowAdsLatch){
+                    timeToShowAdsLatch=true;
+                    int i = MathUtils.random(1,5);
+                    if (i==5) {
+                        BlockPuzzle8bit.playservices.showBannerAd();
+                    }
+                    else {
+                        if(i==2||i==4){
+                            BlockPuzzle8bit.playservices.showInterstitialAd(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Gdx.app.exit();
+                                }
+                            });
+                        }
+                        else {
+                            BlockPuzzle8bit.playservices.showRewardedVideoAd();
+                        }
+                    }
+                }
+            }
+        }
 
         Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 0.8f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -70,13 +102,17 @@ public class MainMenuScreen implements Screen {
     @Override
     public void pause() {
         // TODO Auto-generated method stub
-
+        if (!onSaveToJson){
+            onSaveToJson=true;
+            GameJson.gameData.HiScore=GameJson.gameJsonData.HI_SCORE;
+            GameJson.save();
+        }
     }
 
     @Override
     public void resume() {
         // TODO Auto-generated method stub
-
+        onSaveToJson=false;
     }
 
     @Override

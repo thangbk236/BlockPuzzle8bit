@@ -1,12 +1,14 @@
 package com.tetris8bit.game.Screen.GamePlayScreenElement;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import com.tetris8bit.game.Assets.GameAsset;
 import com.tetris8bit.game.Assets.GameConstant;
 import com.tetris8bit.game.Assets.GameGrid;
 import com.tetris8bit.game.Assets.GameJson;
+import com.tetris8bit.game.BlockPuzzle8bit;
 import com.tetris8bit.game.Screen.MainMenuScreen;
 public class GamePlayScreenTetris {
     protected final Game game;
@@ -15,13 +17,16 @@ public class GamePlayScreenTetris {
     private float gameCountDownTime;
     private int gameCountDown;
     private boolean gameSoundLatch;
+    private boolean playserviceShow;
     public GamePlayScreenTetrisPlay gamePlayScreenTetrisPlay;
     public GamePlayScreenTetris(Game game){
+        GameJson.gameJsonData.HI_SCORE=GameJson.gameData.HiScore;
         gamePlayScreenTetrisPlay=GameJson.gameJsonData;
         gameGrid=new GameGrid(1);
         gameCountDownTime=0.0f;
         gameCountDown=3;
         gameSoundLatch=false;
+        playserviceShow=true;
         this.game = game;
     }
     public void render(float delta, SpriteBatch batch){
@@ -42,7 +47,8 @@ public class GamePlayScreenTetris {
         }
     }
     public void ProcessCountDown(float delta, SpriteBatch batch){
-
+        gamePlayScreenTetrisPlay.GameDraw(batch);
+        playserviceShow=false;
         if (gameCountDown>0){
             batch.begin();
             GameAsset.GoodMorningBigfont.draw(batch,String.format("%d",gameCountDown),GameConstant._TO_STR.x,GameConstant._TO_STR.y,0, Align.center,false);
@@ -59,7 +65,12 @@ public class GamePlayScreenTetris {
         }
     }
     public void ProcessStop(float delta, SpriteBatch batch){
+        //gamePlayScreenTetrisPlay.GameDraw(batch);
         gamePlayScreenTetrisPlay.GameDraw(batch);
+        if (playserviceShow){
+            playserviceShow=false;
+            BlockPuzzle8bit.playservices.showBannerAd();
+        }
         batch.begin();
         GameAsset.GoodMorningfont.draw(batch,"PAUSE",GameConstant._TO_STR.x,GameConstant._TO_STR.y,0, Align.center,false);
         batch.end();
@@ -67,9 +78,13 @@ public class GamePlayScreenTetris {
     public void ProcessGameOver(float delta, SpriteBatch batch){
         if (!gameSoundLatch){
             gameSoundLatch=true;
-            if (GamePlayScreenTetrisPlay.isSound){
+            if (GameJson.gameData.isMusic){
                 GameAsset.gameOverSound.play();
             }
+            if (GameJson.gameData.isVibrate){
+                Gdx.input.vibrate(200);
+            }
+            GameJson.gameData.Score=GameJson.gameJsonData.SCORE;
             GameJson.gameJsonData=new GamePlayScreenTetrisPlay();
         }
         gamePlayScreenTetrisPlay.GameDraw(batch);
@@ -86,10 +101,15 @@ public class GamePlayScreenTetris {
         else {
             gameCountDown=3;
             gameSoundLatch=false;
-            game.setScreen(MainMenuScreen.getInstance(game,false));
+            game.setScreen(MainMenuScreen.getInstance(game,true));
         }
     }
     public void ProcessGamePlay(float delta, SpriteBatch batch){
+        if (!playserviceShow){
+            playserviceShow=true;
+            BlockPuzzle8bit.playservices.hideBannerAd();
+
+        }
         gamePlayScreenTetrisPlay.render(delta,batch);
     }
     public void dispose(){

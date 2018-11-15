@@ -17,9 +17,9 @@ public class GamePlayScreenSideBar {
         GameAsset.font.draw(batch,"SCORE",GameConstant.SCORE_STR.x,GameConstant.SCORE_STR.y,0,Align.center,false);
         GameAsset.font.draw(batch,"LEVEL",GameConstant.LEVEL_STR.x,GameConstant.LEVEL_STR.y,0,Align.center,false);
 
-        GameAsset.normalfont.draw(batch,String.format("%d",GameJson.gameJsonData.HI_SCORE),GameConstant._HI_SCORE_STR.x,GameConstant._HI_SCORE_STR.y,0,Align.center,false);
-        GameAsset.normalfont.draw(batch,String.format("%d",GameJson.gameJsonData.SCORE),GameConstant._SCORE_STR.x,GameConstant._SCORE_STR.y,0,Align.center,false);
-        GameAsset.normalfont.draw(batch,String.format("%d",GameJson.gameJsonData.LEVEL),GameConstant._LEVEL_STR.x,GameConstant._LEVEL_STR.y,0,Align.center,false);
+        GameAsset.normalfont.draw(batch,String.format("%d",GameJson.gameData.HiScore),GameConstant._HI_SCORE_STR.x,GameConstant._HI_SCORE_STR.y,0,Align.center,false);
+        GameAsset.normalfont.draw(batch,String.format("%d",GameJson.gameData.Score),GameConstant._SCORE_STR.x,GameConstant._SCORE_STR.y,0,Align.center,false);
+        GameAsset.normalfont.draw(batch,String.format("%d",GameJson.gameData.Level),GameConstant._LEVEL_STR.x,GameConstant._LEVEL_STR.y,0,Align.center,false);
         batch.end();
     }
 }

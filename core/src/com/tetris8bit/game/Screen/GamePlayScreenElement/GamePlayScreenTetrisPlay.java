@@ -1,5 +1,6 @@
 package com.tetris8bit.game.Screen.GamePlayScreenElement;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -31,10 +32,6 @@ public class GamePlayScreenTetrisPlay {
     public boolean isOver;
     public boolean inFloor;
     public boolean isDown;
-    //Gameover
-    public static boolean isGameOver;
-    public boolean _isGameOver;
-    public static float isGameOverTime;
     //Tetris level
     public int TetrisLine;
     public int TetrisLevel;
@@ -54,17 +51,13 @@ public class GamePlayScreenTetrisPlay {
     public int ScoreVal;
     public boolean isSumScore;
     //Score
-    public static int HI_SCORE;
+    public int HI_SCORE;
     public int SCORE;
     public int LEVEL;
     public int MAX_SCORE;
-    //public int
-    public static boolean isSound=true;
-    public static boolean isVibrate=true;
+
     public float FloorTime;
     public GamePlayScreenTetrisPlay(){
-        isGameOver=false;
-        _isGameOver=false;
         isOver = false;
         isDown = false;
         inFloor = false;
@@ -76,19 +69,16 @@ public class GamePlayScreenTetrisPlay {
         LimitRight = false;
         FirstPlay = true;
         _DownSpeed=2.5f;
-        isGameOverTime=0.0f;
         TetrisLine=0;
         TetrisPositionRotate = new Vector2();
+        TetrisPosition = new Vector2();
         MAX_SCORE=9999999;
         SCORE=0;
         LEVEL=0;
+        MatrixMove=new Vector2();
+        //HI_SCORE=GameJson.gameData.HiScore;
         InitMap();
         InitTetris();
-    }
-    public void InitNewData(){
-        isVibrate=true;
-        isSound=true;
-
     }
     public void InitMap(){
         int[][] _MapGrid = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},// cot 0
@@ -117,7 +107,6 @@ public class GamePlayScreenTetrisPlay {
         CheckIsRotate();
         CheckButton(deltatime);
         GameGetMap();
-
         GameDraw(batch);
     }
     public void CheckCollision(){
@@ -201,8 +190,6 @@ public class GamePlayScreenTetrisPlay {
             boolean _RIGHT_TMF = false;
             boolean UP_TMF = false;
             boolean DOWN_TMF = false;
-
-            Vector2 MatrixMove = new Vector2(0.0f,0.0f);
             TMF=CheckMatrixCollision(TetrisgridRotate,MapGrid,TetrisPosition,MatrixMove);
 
             if (TMF){   // neu bi gioi han xoay
@@ -303,7 +290,7 @@ public class GamePlayScreenTetrisPlay {
         return false;
     }
     public void CheckDown(float deltaTime){// cho tang toc do dich chuyen xuong khoi tetris
-        DownSpeed=_DownSpeed+_ButtonDownSpeed;//+(float) GameSidebar.LEVEL*0.3f;
+        DownSpeed=_DownSpeed+ _ButtonDownSpeed+(float) LEVEL*0.3f;
         if (DownSpeed>15.0f){
             DownSpeed=15.0f;
         }
@@ -380,25 +367,20 @@ public class GamePlayScreenTetrisPlay {
         if (isSumScore){
             isSumScore=false;
             SCORE+=GetScore(SumScore);
+
             LEVEL=GetLevel(TetrisLine);
             if (SCORE>MAX_SCORE){
                 SCORE=MAX_SCORE;
             }
-            if (SCORE>HI_SCORE){
-                HI_SCORE=SCORE;
+            if (SCORE>GameJson.gameData.HiScore){
+                GameJson.gameData.HiScore=SCORE;
             }
-            if (isSound){
+            if (GameJson.gameData.isMusic){
                 GameAsset.eatSound.play();
             }
-            if (isVibrate){
-
+            if (GameJson.gameData.isVibrate){
+                Gdx.input.vibrate(80);
             }
-            //if (TetrisJson.tetrisData.isMusic){
-            //    GameAsset.eat.play();
-            //}
-            //if (TetrisJson.tetrisData.isMusic){
-            //    Gdx.input.vibrate(100);
-            //}
         }
     }
 
@@ -420,8 +402,9 @@ public class GamePlayScreenTetrisPlay {
                 ScoreVal=0;
                 break;
         }
-        return ScoreVal;//+GamePlayScreenSideBar.LEVEL;//+GameSidebar.LEVEL;
+        return ScoreVal+LEVEL*100;
     }
+
     public int GetLevel(int index){
         return index/50;
     }
@@ -429,7 +412,6 @@ public class GamePlayScreenTetrisPlay {
     public void CheckGameOver(){
         for (int x=3;x<MapGrid.length-3;x++){
             if (MapGrid[x][MapGrid[0].length-4]==1){
-                //isGameOver=true;
                 GamePlayScreenTetris.gameState=2;
             }
         }
@@ -574,14 +556,17 @@ public class GamePlayScreenTetrisPlay {
         return index1;
     }
     public void GameDraw(SpriteBatch batch){
+        GameJson.gameData.Score=SCORE;
+        GameJson.gameData.Level=LEVEL;
         batch.begin();
         for (int x=0;x<Tetrisgrid.length;x++){
             for (int y=0;y<Tetrisgrid[0].length;y++){
                 if (GamePlayScreenTetris.gameState!=3){
-                    if (TetrisPosition.y+y==16||TetrisPosition.y+y==17||TetrisPosition.y+y==18||TetrisPosition.y+y==19){
+                    if (TetrisPosition.y+y>=16&&TetrisPosition.y+y<20){
                         continue;
                     }
                 }
+
                 if (Tetrisgrid[x][y]!=0){
                     CalignPosition(batch, GameAsset.BrickSprite72,TetrisPosition.x+x,TetrisPosition.y+y, GameConstant.MAIN_GAME_GRID_OFFSET,1.0f);
                 }
@@ -590,7 +575,7 @@ public class GamePlayScreenTetrisPlay {
         for (int x=0;x<Tetrisgrid.length;x++){
             for (int y=0;y<Tetrisgrid[0].length;y++){
                 if (GamePlayScreenTetris.gameState!=3){
-                    if (TetrisPosition.y+MatrixMove.y+y+1==16||TetrisPosition.y+MatrixMove.y+y+1==17||TetrisPosition.y+MatrixMove.y+y+1==18||TetrisPosition.y+MatrixMove.y+1+y==19){
+                    if (TetrisPosition.y+MatrixMove.y+y+1>=16&&TetrisPosition.y+MatrixMove.y+y+1<20){
                         continue;
                     }
                 }
@@ -610,7 +595,7 @@ public class GamePlayScreenTetrisPlay {
         for (int x = 3; x < MapGrid.length-3; x++) {//MapGrid.length so cot trong mang, voi ma tran [18][27] thi se tra ve 18, ung voi so luong truc x
             for (int y = 3; y < MapGrid[0].length-4; y++) {// MapGrid[0].length so phan tu trong mang thu nhat, voi ma tran [18][27] thi se tra ve 27, ung voi so luong truc y
                 if (GamePlayScreenTetris.gameState!=3){
-                    if (y==16||y==17||y==18||y==19){
+                    if (y>=16&&y<20){
                         continue;
                     }
                 }

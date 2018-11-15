@@ -3,6 +3,7 @@ package com.tetris8bit.game.Assets;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
+import com.tetris8bit.game.BlockPuzzle8bit;
 import com.tetris8bit.game.Screen.GamePlayScreen;
 import com.tetris8bit.game.Screen.MainMenuScreen;
 import com.tetris8bit.game.Screen.SettingScreen;
@@ -24,6 +25,7 @@ public class GameHome {
     }
 
     public void CheckButtonEvent(float delta){
+        LeaderBoard.isClickLatch=true;
         if (LeaderBoard.checkOnClick()){
             if (!isLeaderBoard){
                 isLeaderBoard=true;
@@ -34,9 +36,12 @@ public class GameHome {
             if (isLeaderBoard){
                 isLeaderBoard=false;
                 LeaderBoard.isClick=false;
+                BlockPuzzle8bit.playservices.submitScore(GameJson.gameData.HiScore);
+                BlockPuzzle8bit.playservices.showLeaderBoard();
                 //game.setScreen(SettingScreen.getInstance(game,false,0));
             }
         }
+        PlayGame.isClickLatch=true;
         if (PlayGame.checkOnClick()){
             if (!isPlayGame){
                 isPlayGame=true;
@@ -47,9 +52,11 @@ public class GameHome {
             if (isPlayGame){
                 isPlayGame=false;
                 PlayGame.isClick=false;
+                MainMenuScreen.firstTimePlay=false;
                 game.setScreen(GamePlayScreen.getInstance(game,true));
             }
         }
+        SettingGame.isClickLatch=true;
         if (SettingGame.checkOnClick()){
             if (!isSettingGame){
                 isSettingGame=true;
@@ -71,10 +78,18 @@ public class GameHome {
         PlayGame.render(batch);
         SettingGame.render(batch);
         batch.begin();
-        GameAsset.GoodMorningfont.draw(batch,"WELCOME",GameConstant._WELCOME_STR.x,GameConstant._WELCOME_STR.y,0, Align.center,false);
-        GameAsset.GoodMorningfont.draw(batch,"TO",GameConstant._TO_STR.x,GameConstant._TO_STR.y,0, Align.center,false);
-        GameAsset.GoodMorningfont.draw(batch,"BLOCK PUZZLE",GameConstant._BLOCKPZZLE_STR.x,GameConstant._BLOCKPZZLE_STR.y,0, Align.center,false);
-        GameAsset.GoodMorningfont.draw(batch,"8BIT",GameConstant._8BIT_STR.x,GameConstant._8BIT_STR.y,0, Align.center,false);
+        if (MainMenuScreen.firstTimePlay){
+            GameAsset.GoodMorningfont.draw(batch,"WELCOME",GameConstant._WELCOME_STR.x,GameConstant._WELCOME_STR.y,0, Align.center,false);
+            GameAsset.GoodMorningfont.draw(batch,"TO",GameConstant._TO_STR.x,GameConstant._TO_STR.y,0, Align.center,false);
+            GameAsset.GoodMorningfont.draw(batch,"BLOCK PUZZLE",GameConstant._BLOCKPZZLE_STR.x,GameConstant._BLOCKPZZLE_STR.y,0, Align.center,false);
+            GameAsset.GoodMorningfont.draw(batch,"8BIT",GameConstant._8BIT_STR.x,GameConstant._8BIT_STR.y,0, Align.center,false);
+        }
+        else {
+            GameAsset.GoodMorningfont.draw(batch,"HI-SCORE",GameConstant._WELCOME_STR.x,GameConstant._WELCOME_STR.y,0, Align.center,false);
+            GameAsset.GoodMorningfont.draw(batch,String.format("%d",GameJson.gameData.HiScore),GameConstant._TO_STR.x,GameConstant._TO_STR.y,0, Align.center,false);
+            GameAsset.GoodMorningfont.draw(batch,"SCORE",GameConstant._BLOCKPZZLE_STR.x,GameConstant._BLOCKPZZLE_STR.y,0, Align.center,false);
+            GameAsset.GoodMorningfont.draw(batch,String.format("%d",GameJson.gameData.Score),GameConstant._8BIT_STR.x,GameConstant._8BIT_STR.y,0, Align.center,false);
+        }
         batch.end();
     }
 }

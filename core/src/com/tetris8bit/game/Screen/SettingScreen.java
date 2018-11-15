@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tetris8bit.game.Assets.GameButton;
 import com.tetris8bit.game.Assets.GameConstant;
 import com.tetris8bit.game.Assets.GameJson;
+import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenTetris;
 import com.tetris8bit.game.Screen.GamePlayScreenElement.GamePlayScreenTetrisPlay;
 
 public class SettingScreen implements Screen {
@@ -31,7 +32,7 @@ public class SettingScreen implements Screen {
     private GameButton SettingVibrate;
     private GameButton SettingExit;
     private GameButton SettingClose;
-
+    public boolean onSaveToJson;
     public SettingScreen(Game game){
         SettingBackground = new GameButton("ButtonEdge/SettingBackground.png","ButtonEdge/SettingBackground.png","Music/move.wav",GameConstant.SettingBackGround,false);
         SettingNewGame = new GameButton("ButtonEdge/NewGame.png","ButtonEdge/NewGame.png","Music/move.wav",GameConstant.SettingNewGame,false);
@@ -39,8 +40,8 @@ public class SettingScreen implements Screen {
         SettingVibrate = new GameButton("ButtonEdge/VibrateOn.png","ButtonEdge/VibrateOff.png","Music/move.wav",GameConstant.SettingVibrate,false);
         SettingExit = new GameButton("ButtonEdge/Exit.png","ButtonEdge/Exit.png","Music/move.wav",GameConstant.SettingExit,false);
         SettingClose = new GameButton("ButtonEdge/Close.png","ButtonEdge/Close.png","Music/move.wav",GameConstant.SettingClose,false);
-        SettingSounOn.isClick=GamePlayScreenTetrisPlay.isSound;
-        SettingVibrate.isClick=GamePlayScreenTetrisPlay.isVibrate;
+        SettingSounOn.isClick=GameJson.gameData.isMusic;//  GamePlayScreenTetrisPlay.isSound;
+        SettingVibrate.isClick=GameJson.gameData.isVibrate;//  GamePlayScreenTetrisPlay.isVibrate;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConstant.S_WIDTH, GameConstant.S_HEIGHT);
         camera.update();
@@ -48,6 +49,7 @@ public class SettingScreen implements Screen {
         this.game=game;
     }
     public void CheckButtonEvent(float delta){
+        SettingNewGame.isClickLatch=true;
         if (SettingNewGame.checkOnClick()){
             if (!isNewGameLatch){
                 isNewGameLatch=true;
@@ -59,13 +61,14 @@ public class SettingScreen implements Screen {
                 isNewGameLatch=false;
                 SettingNewGame.isClick=false;
                 GameJson.gameJsonData=new GamePlayScreenTetrisPlay();
+                GameJson.gameJsonData.HI_SCORE=GameJson.gameData.HiScore;
                 game.setScreen(GamePlayScreen.getInstance(game,true));
             }
         }
         if (SettingSounOn.checkOnClick()){
             if (!isSoundOnLatch){
                 isSoundOnLatch=true;
-
+                SettingSounOn.isClickLatch=true;
             }
         }
         else {
@@ -77,13 +80,14 @@ public class SettingScreen implements Screen {
                 else {
                     SettingSounOn.isClick=true;
                 }
-                GameJson.gameJsonData.isSound=SettingSounOn.isClick;
-                GameJson.save();
+                GameJson.gameData.isMusic=SettingSounOn.isClick;
+                //GameJson.save();
             }
         }
         if (SettingVibrate.checkOnClick()){
             if (!isVibrateOnLatch){
                 isVibrateOnLatch=true;
+                SettingVibrate.isClickLatch=true;
             }
         }
         else {
@@ -95,10 +99,11 @@ public class SettingScreen implements Screen {
                 else {
                     SettingVibrate.isClick=true;
                 }
-                GameJson.gameJsonData.isVibrate=SettingVibrate.isClick;
-                GameJson.save();
+                GameJson.gameData.isVibrate=SettingVibrate.isClick;
+                //GameJson.save();
             }
         }
+        SettingExit.isClickLatch=true;
         if (SettingExit.checkOnClick()){
             if (!isExitLatch){
                 isExitLatch=true;
@@ -109,9 +114,12 @@ public class SettingScreen implements Screen {
             if (isExitLatch){
                 isExitLatch=false;
                 SettingExit.isClick=false;
+                GameJson.gameData.HiScore=GameJson.gameJsonData.HI_SCORE;
+                GameJson.save();
                 System.exit(0);
             }
         }
+        SettingClose.isClickLatch=true;
         if (SettingClose.checkOnClick()){
             if(!isCloseLatch){
                 isCloseLatch=true;
@@ -179,13 +187,17 @@ public class SettingScreen implements Screen {
     @Override
     public void pause() {
         // TODO Auto-generated method stub
-
+        if (!onSaveToJson){
+            onSaveToJson=true;
+            GameJson.gameData.HiScore=GameJson.gameJsonData.HI_SCORE;
+            GameJson.save();
+        }
     }
 
     @Override
     public void resume() {
         // TODO Auto-generated method stub
-
+        onSaveToJson=false;
     }
 
     @Override

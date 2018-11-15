@@ -33,9 +33,7 @@ public class GamePlayScreen implements Screen {
         camera.update();
         batch = new SpriteBatch();
         this.game=game;
-
         onClickLatch=false;
-
         gamePlayScreenButton = new GamePlayScreenButton(game);
         gamePlayScreenTetris = new GamePlayScreenTetris(game);
         gamePlayScreenSideBar = new GamePlayScreenSideBar();
@@ -45,12 +43,10 @@ public class GamePlayScreen implements Screen {
     public static GamePlayScreen getInstance(Game game,boolean newscreen){
         if (newscreen){
             gamePlayScreen=new GamePlayScreen(game);
-            //gamePlayScreen.gamePlayScreenTetris.gamePlayScreenTetrisPlay=new GamePlayScreenTetrisPlay();
         }
         else {
             if(gamePlayScreen==null){
                 gamePlayScreen=new GamePlayScreen(game);
-                //gamePlayScreen.gamePlayScreenTetris.gamePlayScreenTetrisPlay=new GamePlayScreenTetrisPlay();
             }
         }
         gamePlayScreen.gamePlayScreenTetris.gameState=0;
@@ -84,6 +80,7 @@ public class GamePlayScreen implements Screen {
         // TODO Auto-generated method stub
         if (!onSaveToJson){
             onSaveToJson=true;
+            GameJson.gameData.HiScore=GameJson.gameJsonData.HI_SCORE;
             GameJson.save();
         }
     }
