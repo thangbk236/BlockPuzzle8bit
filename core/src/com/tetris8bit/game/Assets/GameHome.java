@@ -36,7 +36,6 @@ public class GameHome {
             if (isLeaderBoard){
                 isLeaderBoard=false;
                 LeaderBoard.isClick=false;
-                BlockPuzzle8bit.playservices.submitScore(GameJson.gameData.HiScore);
                 BlockPuzzle8bit.playservices.showLeaderBoard();
                 //game.setScreen(SettingScreen.getInstance(game,false,0));
             }

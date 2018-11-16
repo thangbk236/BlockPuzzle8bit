@@ -86,6 +86,7 @@ public class GamePlayScreenTetris {
             }
             GameJson.gameData.Score=GameJson.gameJsonData.SCORE;
             GameJson.gameJsonData=new GamePlayScreenTetrisPlay();
+            BlockPuzzle8bit.playservices.submitScore(GameJson.gameData.HiScore);
         }
         gamePlayScreenTetrisPlay.GameDraw(batch);
         if (gameCountDown>0){
