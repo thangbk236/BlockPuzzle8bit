@@ -29,7 +29,6 @@ public class GamePlayScreenTetrisPlay {
     public boolean LimitDown;
     public boolean LimitLeft;
     public boolean LimitRight;
-    public boolean isOver;
     public boolean inFloor;
     public boolean isDown;
     //Tetris level
@@ -58,7 +57,6 @@ public class GamePlayScreenTetrisPlay {
 
     public float FloorTime;
     public GamePlayScreenTetrisPlay(){
-        isOver = false;
         isDown = false;
         inFloor = false;
         LimitRotate = false;
@@ -180,6 +178,7 @@ public class GamePlayScreenTetrisPlay {
     public void CheckIsRotate(){
         if (GamePlayScreenButton.isUpButton||GamePlayScreenButton.isFireButton){    // khi co nut xoay duoc bam thi se kiem tra co the quay duoc hay khong
             TetrisPositionRotate.set(0.0f,0.0f);
+            MatrixMove.set(0.0f,0.0f);
             TetrisgridRotate=Rotate(Tetrisgrid);    // tao mot khoi xoay
             LimitRotate=true;// ban dau cho gioi han xoay, neu vao truong hop xoay duoc thi se mac dinh chuyen sang false
             // dau tien kiem tra xem khoi xoay nay co va cham vao map khong

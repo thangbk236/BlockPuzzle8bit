@@ -80,7 +80,6 @@ public class GamePlayScreen implements Screen {
         // TODO Auto-generated method stub
         if (!onSaveToJson){
             onSaveToJson=true;
-            GameJson.gameData.HiScore=GameJson.gameJsonData.HI_SCORE;
             GameJson.save();
         }
     }
